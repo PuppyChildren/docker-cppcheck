@@ -12,4 +12,4 @@ RUN apk update && \
     rm -rf /tmp/cppcheck && \
     mkdir /src
 
-ENTRYPOINT ["cppcheck", "/src", "--verbose", "--enable=all", "--inconclusive", "--std=c++11", "--language=c++", "--error-exitcode=1"]
+CMD ["/bin/sh"]
