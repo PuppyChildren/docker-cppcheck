@@ -21,6 +21,17 @@ class Runner(object):
             print("Could not detect service name.")
             sys.exit(1)
 
+        if self.upload:
+            if not self.username:
+                print("Could not upload, username was not defined.")
+                sys.exit(1)
+
+            if not self.password:
+                print("Could not upload, password was not defined.")
+                sys.exit(1)
+
+            subprocess.check_call(["docker", "login", "-u", self.username, "-p", self.password])
+
     def build(self):
         subprocess.check_call(["docker-compose", "build", self.service])
 
