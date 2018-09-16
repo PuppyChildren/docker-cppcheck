@@ -12,16 +12,13 @@ class Runner(object):
         self.username = os.getenv("DOCKER_USERNAME", "uilianries")
         self.password = os.getenv("DOCKER_PASSWORD", "").replace('"', '\\"')
         self.upload = os.getenv("DOCKER_UPLOAD", False)
-        travis_branch = os.getenv("TRAVIS_BRANCH", "")
-        appveyor_branch = os.getenv("APPVEYOR_REPO_BRANCH","")
+        self.branch = os.getenv("TRAVIS_BRANCH", "")
         self.stable_branch = os.getenv("DOCKER_STABLE_BRANCH", "master")
-        self.service = os.getenv("DOCKER_SERVICE", "")
-        self.branch = travis_branch if travis_branch != "" else appveyor_branch
-        self.compiler = "Visual Studio" if platform.system() == "Windows" else "gcc"
-        version_match = re.match(r"\D+(\d+).*", self.service)
-        self.compiler_version = version_match.group(1) if platform.system() == "Windows" else '.'.join(version_match.group(1))
-        self.cross_building = "arm" in self.service
+        self.service = os.getenv("DOCKER_SERVICE")
         self.image = "%s/%s" % (self.username, self.service)
+
+        if not self.service:
+            raise Exception("SERVICE is empty")
 
     def build(self):
         subprocess.check_call(["docker-compose", "build", self.service])
