@@ -1,0 +1,16 @@
+sudo: required
+
+language: python
+
+services:
+  - docker
+
+env:
+  global:
+    - DOCKER_UPLOAD="TRUE"
+
+  matrix:
+    - DOCKER_SERVICE="cppcheck"
+
+script:
+  - python scripts/run.py
