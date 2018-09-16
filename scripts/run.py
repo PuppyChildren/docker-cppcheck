@@ -18,7 +18,8 @@ class Runner(object):
         self.image = "%s/%s" % (self.username, self.service)
 
         if not self.service:
-            raise Exception("SERVICE is empty")
+            print("Could not detect service name.")
+            sys.exit(1)
 
     def build(self):
         subprocess.check_call(["docker-compose", "build", self.service])
