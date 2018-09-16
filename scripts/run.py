@@ -44,15 +44,6 @@ class Runner(object):
             print("Skiping upload, branch %s is not stable" % self.branch)
             sys.exit(0)
 
-        if not self.username:
-            print("Could not upload, username was not defined.")
-            sys.exit(1)
-
-        if not self.password:
-            print("Could not upload, password was not defined.")
-            sys.exit(1)
-
-        subprocess.check_call(["docker", "login", "-u", self.username, "-p", self.password])
         subprocess.check_call(["docker-compose", "push", self.service])
 
     def run(self):
